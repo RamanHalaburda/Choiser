@@ -33,6 +33,8 @@
                     <input type="submit" value="Авторизоваться" name="login" />
                     <br><br>
                     <input type="checkbox" value="admin" name="isadmin" /> Я администратор
+                    <br><br>
+                    <span><a href="Registration">Регистрация</a></span>
                 </form>
             </center>
         </div>
