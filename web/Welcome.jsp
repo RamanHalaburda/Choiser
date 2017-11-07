@@ -25,12 +25,12 @@
                 <h1>Привествуем в Choiser!</h1>
                 <h1>Сервис для множественного голосования.</h1><br><br><br>
                 <h2>Авторизация</h2><br><br>
-                <form name="UserMenu" action="UserMenu" method="POST">
-                    <input placeholder="Логин" type="text" name="user" value="" />
+                <form name="Verification" action="Verification" method="POST">
+                    <input placeholder="Логин" type="text" name="login" value="" />
                     <br><br>
                     <input placeholder="Пароль" type="text" name="password" value="" />
                     <br><br>
-                    <input type="submit" value="Авторизоваться" name="login" />
+                    <input type="submit" value="Авторизоваться" name="do" />
                     <br><br>
                     <input type="checkbox" value="admin" name="isadmin" /> Я администратор
                     <br><br>

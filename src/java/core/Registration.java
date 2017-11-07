@@ -22,7 +22,7 @@ public class Registration extends HttpServlet {
         {
             session=request.getSession();         
             
-            // отображение результата
+            // отображение формы
             out.println("<html> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"> <title>Продолжение регистрации - Choiser</title>");
             out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">\n");
             out.println("<script type=\"text/javascript\" src=\"js/script.js\"></script>");

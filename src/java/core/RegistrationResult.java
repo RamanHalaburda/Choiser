@@ -21,8 +21,8 @@ import javax.servlet.http.HttpSession;
  * @author Roman
  */
 @WebServlet(name = "RegistrationResult", urlPatterns = {"/RegistrationResult"})
-public class RegistrationResult extends HttpServlet {
-
+public class RegistrationResult extends HttpServlet 
+{
     public String email;
     public String login;
     public String password;
