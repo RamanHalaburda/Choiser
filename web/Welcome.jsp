@@ -30,9 +30,9 @@
                     <br><br>
                     <input placeholder="Пароль" type="text" name="password" value="" />
                     <br><br>
-                    <input type="submit" value="Авторизоваться" name="do" />
-                    <br><br>
                     <input type="checkbox" value="admin" name="isadmin" /> Я администратор
+                    <br><br>
+                    <input type="submit" value="Авторизоваться" name="do" />
                     <br><br>
                     <span><a href="Registration">Регистрация</a></span>
                 </form>

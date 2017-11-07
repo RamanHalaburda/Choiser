@@ -38,12 +38,12 @@ public class Verification extends HttpServlet
 
                 if(isadmin)
                 {
-                    ResultSet rs = st.executeQuery("select * from admin;");
+                    ResultSet rs = st.executeQuery("select admin_login, admin_password from admin;");
             
                     // поиск администратора
                     while(rs.next())
                     {
-                        if(login.equals(rs.getString(2)) && password.equals(rs.getString(3)))
+                        if(login.equals(rs.getString(1)) && password.equals(rs.getString(2)))
                         {
                             response.sendRedirect("AdminMenu");
                         }
@@ -51,12 +51,12 @@ public class Verification extends HttpServlet
                 }
                 else
                 {
-                    ResultSet rs = st.executeQuery("select * from user;");
+                    ResultSet rs = st.executeQuery("select user_login, user_password from user;");
             
                     // поиск пользователя
                     while(rs.next())
                     {
-                        if(login.equals(rs.getString(3)) && password.equals(rs.getString(4)))
+                        if(login.equals(rs.getString(1)) && password.equals(rs.getString(2)))
                         {
                             response.sendRedirect("UserMenu");
                         }

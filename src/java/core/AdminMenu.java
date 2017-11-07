@@ -2,6 +2,9 @@ package core;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +29,7 @@ public class AdminMenu extends HttpServlet
             // отображение формы
             out.println("<html> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"> <title>Продолжение регистрации - Choiser</title>");
             out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">\n");
+            out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/tablestyle.css\">\n");
             out.println("<script type=\"text/javascript\" src=\"js/script.js\"></script>");
             out.println("</head>");
             out.println("<div class=\"clock\"> \n" +
@@ -36,18 +40,54 @@ public class AdminMenu extends HttpServlet
             "           </div>");
             out.println("<body onload=\"datetime()\">");
             out.println("<div class=\"page-wrapper\"><center>");
-            out.println("<br><h2><br>Форма регистрации</h2><br>");            
-            out.println(
-                "<form name=\"RegistrationResult\" action=\"RegistrationResult\" method=\"POST\">" +
-                    "<input placeholder=\"Email\" type=\"text\" name=\"email\" value\"\" />" +
-                    "<br><br>" +
-                    "<input placeholder=\"Логин\" type=\"text\" name=\"login\" value=\"\" />" +
-                    "<br><br>" +
-                    "<input placeholder=\"Пароль\" type=\"text\" name=\"password\" value=\"\" />" +
-                    "<br><br>" +
-                    "<input type=\"submit\" value=\"Зарегестрироваться\" name=\"login\" />" +
-                    "<br><br>" +
-                "</form>");
+            out.println("<br><h2><br>Администратор: Голосования</h2><br>");            
+            
+            out.println("<table class=\"container\">");
+            out.println("<thead>" +
+            "                <td>Тема</td>" +
+            "                <td>Просмотр</td>" +
+            "                <td>Изменение</td>" +
+            "                <td>Удаление</td>" +                    
+            "           </thead><tbody>");
+            
+            try
+            {
+                Class.forName("com.mysql.jdbc.Driver");
+                java.sql.Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/choiserdb","root","root");
+                Statement st = connection.createStatement();
+                ResultSet rs = st.executeQuery("select * from vote;");
+
+                // вывод истории сообщений
+                String id, vote;
+                while(rs.next())
+                {
+                    id = rs.getString(1);
+                    vote = rs.getString(2);
+                    out.println("<tr>");
+                    out.println("<td>" + vote + "</td>");                    
+                    out.println("<td><form action=\"AdminViewVote\" method=\"post\">\n" +
+                    "                <input type=\"submit\" class=\"btn\" name=\"view\" value=\"Просмотреть\" />\n" +
+                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + "\" />\n" +
+                    "            </form></td>");
+                    out.println("<td><form action=\"AdminEditVote\" method=\"post\">\n" +
+                    "                <input type=\"submit\" class=\"btn\" name=\"edit\" value=\"Релактировать\" />\n" +
+                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + "\" />\n" +
+                    "            </form></td>");
+                    out.println("<td><form action=\"AdminDeleteVote\" method=\"post\">\n" +
+                    "                <input type=\"submit\" class=\"btn\" name=\"delete\" value=\"Удалить\" />\n" +
+                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + "\" />\n" +
+                    "            </form></td>");
+                    out.println("</tr>");                    
+                }
+                connection.close();
+            }
+            catch(Exception exception) 
+            {
+               System.err.println(exception.getMessage());
+            }
+            
+            out.println("<tbody></table");
+            
             out.println("</div></body>");
             out.println("</html>"); 
         }

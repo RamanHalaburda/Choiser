@@ -1,0 +1,104 @@
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+
+body {
+    font-weight: 300;
+    line-height: 1.42em;
+}
+
+.btn {
+    display: inline-block;
+    padding: 3px 5px;
+    font-size: 1em;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #FB667A;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px #999;
+}
+
+.btn:hover {background-color: #FC4A7F}
+
+.btn:active {
+    background-color: #FC4A7F;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.container thead {
+    font-weight: bold;
+    font-size: 1em;
+    text-align: left;
+    color: #FB667A;
+}
+
+.container td {
+    margin-top: 10px;
+    font-weight: normal;
+    font-size: 1em;
+    -webkit-box-shadow: 0 2px 2px -2px #0E1119;
+    -moz-box-shadow: 0 2px 2px -2px #0E1119;
+    box-shadow: 0 2px 2px -2px #0E1119;
+}
+
+.container {
+    text-align: left;
+    overflow: hidden;
+    width: 90%;
+    margin: 0 auto;
+    display: table;
+    padding: 0 0 6em 0;
+}
+
+.container td, .container thead {
+    padding-bottom: 2%;
+    padding-top: 2%;
+    padding-left:2%;  
+}
+
+/* Background-color of the odd rows */
+.container tr:nth-child(odd) {
+    background-color: #323C50;
+}
+
+/* Background-color of the even rows */
+.container tr:nth-child(even) {
+    background-color: #2C3446;
+}
+
+.container thead {
+    background-color: #1F2739;
+}
+
+.container td:first-child { color: #FB667A; }
+
+.container tr:hover {
+    background-color: #464A52;
+    -webkit-box-shadow: 0 6px 6px -6px #0E1119;
+    -moz-box-shadow: 0 6px 6px -6px #0E1119;
+    box-shadow: 0 6px 6px -6px #0E1119;
+}
+
+
+.container td:hover {
+  background-color: #888;
+  color: #403E10;
+  
+  box-shadow: #7F7C21 -1px 1px, #7F7C21 -2px 2px, #7F7C21 -3px 3px;
+  transform: translate3d(3px, -3px, 0);
+  
+  transition-delay: 0s;
+	  transition-duration: 0.4s;
+	  transition-property: all;
+  transition-timing-function: line;
+}
+
+@media (max-width: 800px) {
+    .container td:nth-child(4),
+    .container th:nth-child(4) { display: none; }
+}
+
