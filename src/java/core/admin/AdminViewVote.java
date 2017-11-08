@@ -25,7 +25,6 @@ public class AdminViewVote extends HttpServlet
         PrintWriter out=response.getWriter();        
         
         voteID = request.getParameter("key"); // берем id голосования        
-        voteTitle = request.getParameter("votetitle"); // берем тему голосования
         
         try
         {
@@ -45,12 +44,22 @@ public class AdminViewVote extends HttpServlet
             "           </div>");
             out.println("<body onload=\"datetime()\">");
             out.println("<div class=\"page-wrapper\"><center>");
+            
+            try
+            {
+                java.sql.Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/choiserdb","root","root");
+                Statement st = connection.createStatement();
+                ResultSet rs = st.executeQuery("select variant_title from variant where vote_id = " + voteID + ";");
+                voteTitle = rs.getString(1);
+            }
+            catch(Exception exception) { 
+                System.err.println(exception.getMessage()); }
+                
             out.println("<br><h2><br>Администратор: Варианты голосования \"" + voteTitle + "\"</h2><br>");            
             
             out.println("<table class=\"container\">");
             out.println("<thead>" +
             "                <td>Вариант</td>" +
-            "                <td>Просмотр</td>" +
             "                <td>Изменение</td>" +
             "                <td>Удаление</td>" +                    
             "           </thead><tbody>");

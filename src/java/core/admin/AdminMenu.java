@@ -26,7 +26,7 @@ public class AdminMenu extends HttpServlet
             session=request.getSession();         
             
             // отображение таблицы
-            out.println("<html> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"> <title>Продолжение регистрации - Choiser</title>");
+            out.println("<html> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"> <title>Голосования - Choiser</title>");
             out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">\n");
             out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/tablestyle.css\">\n");
             out.println("<script type=\"text/javascript\" src=\"js/script.js\"></script>");
@@ -44,6 +44,7 @@ public class AdminMenu extends HttpServlet
             out.println("<table class=\"container\">");
             out.println("<thead>" +
             "                <td>Тема</td>" +
+            "                <td>Просмотр</td>" +
             "                <td>Изменение</td>" +
             "                <td>Удаление</td>" +                    
             "           </thead><tbody>");
@@ -62,7 +63,7 @@ public class AdminMenu extends HttpServlet
                     id = rs.getString(1);
                     vote = rs.getString(2);
                     out.println("<tr>");
-                    out.println("<td name=\"votetitle\">" + vote + "</td>");                    
+                    out.println("<td>" + vote + "</td>");                    
                     out.println("<td><form action=\"AdminViewVote\" method=\"post\">\n" +
                     "                <input type=\"submit\" class=\"btn\" name=\"view\" value=\"Просмотреть\" />\n" +
                     "                <input type=\"hidden\" name=\"key\" value=\"" + id + "\" />\n" +
