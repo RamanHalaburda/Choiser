@@ -80,16 +80,6 @@ public class Verification extends HttpServlet
                 out.println("</html>");
                 System.out.println(e);
             }
-            
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet Verification</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet Verification at " + request.getContextPath() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
         }
     }
 

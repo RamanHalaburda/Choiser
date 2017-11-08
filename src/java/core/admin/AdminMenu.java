@@ -41,6 +41,10 @@ public class AdminMenu extends HttpServlet
             out.println("<div class=\"page-wrapper\"><center>");
             out.println("<br><h2><br>Администратор: Голосования</h2><br>");            
             
+            out.println("<form action=\"AdminAddVote\" method=\"post\">\n" +
+                    "                <input type=\"submit\" class=\"btn\" name=\"view\" value=\"Добавить новое голосование\" />\n" +
+                    "            </form><br>");
+            
             out.println("<table class=\"container\">");
             out.println("<thead>" +
             "                <td>Тема</td>" +
