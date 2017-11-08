@@ -1,4 +1,4 @@
-package core;
+package core.admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,11 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "AdminViewVote", urlPatterns = {"/AdminViewVote"})
-public class AdminViewVote extends HttpServlet 
-{
+@WebServlet(name = "AdminDeleteVote", urlPatterns = {"/AdminDeleteVote"})
+public class AdminDeleteVote extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
@@ -20,10 +18,10 @@ public class AdminViewVote extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminViewVote</title>");            
+            out.println("<title>Servlet AdminDeleteVote</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AdminViewVote at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AdminDeleteVote at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -46,5 +44,4 @@ public class AdminViewVote extends HttpServlet
         return "Short description";
     }
 
-    HttpSession session;
 }

@@ -1,4 +1,4 @@
-package core;
+package core.admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,8 +14,7 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "AdminMenu", urlPatterns = {"/AdminMenu"})
 public class AdminMenu extends HttpServlet 
-{
-
+{    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
         response.setContentType("text/html;charset=UTF-8");
@@ -26,7 +25,7 @@ public class AdminMenu extends HttpServlet
         {
             session=request.getSession();         
             
-            // отображение формы
+            // отображение таблицы
             out.println("<html> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"> <title>Продолжение регистрации - Choiser</title>");
             out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">\n");
             out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/tablestyle.css\">\n");
@@ -45,7 +44,6 @@ public class AdminMenu extends HttpServlet
             out.println("<table class=\"container\">");
             out.println("<thead>" +
             "                <td>Тема</td>" +
-            "                <td>Просмотр</td>" +
             "                <td>Изменение</td>" +
             "                <td>Удаление</td>" +                    
             "           </thead><tbody>");
@@ -57,20 +55,20 @@ public class AdminMenu extends HttpServlet
                 Statement st = connection.createStatement();
                 ResultSet rs = st.executeQuery("select * from vote;");
 
-                // вывод истории сообщений
+                // вывод тем голосований
                 String id, vote;
                 while(rs.next())
                 {
                     id = rs.getString(1);
                     vote = rs.getString(2);
                     out.println("<tr>");
-                    out.println("<td>" + vote + "</td>");                    
+                    out.println("<td name=\"votetitle\">" + vote + "</td>");                    
                     out.println("<td><form action=\"AdminViewVote\" method=\"post\">\n" +
                     "                <input type=\"submit\" class=\"btn\" name=\"view\" value=\"Просмотреть\" />\n" +
                     "                <input type=\"hidden\" name=\"key\" value=\"" + id + "\" />\n" +
                     "            </form></td>");
                     out.println("<td><form action=\"AdminEditVote\" method=\"post\">\n" +
-                    "                <input type=\"submit\" class=\"btn\" name=\"edit\" value=\"Релактировать\" />\n" +
+                    "                <input type=\"submit\" class=\"btn\" name=\"edit\" value=\"Редактировать\" />\n" +
                     "                <input type=\"hidden\" name=\"key\" value=\"" + id + "\" />\n" +
                     "            </form></td>");
                     out.println("<td><form action=\"AdminDeleteVote\" method=\"post\">\n" +

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package core;
 
 import java.io.IOException;
@@ -16,10 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Roman
- */
 @WebServlet(name = "RegistrationResult", urlPatterns = {"/RegistrationResult"})
 public class RegistrationResult extends HttpServlet 
 {
@@ -33,9 +24,9 @@ public class RegistrationResult extends HttpServlet
         request.setCharacterEncoding("UTF-8");        
         PrintWriter out=response.getWriter();        
         
-        email = request.getParameter("email"); // берем
-        login = request.getParameter("login"); // берем
-        password = request.getParameter("password"); // берем
+        email = request.getParameter("email"); // берем Email
+        login = request.getParameter("login"); // берем логин
+        password = request.getParameter("password"); // берем пароль
         
         try
         {
@@ -97,8 +88,7 @@ public class RegistrationResult extends HttpServlet
             catch(Exception exception) 
             {
                 System.err.println(exception.getMessage());
-            }
-            
+            }            
             
             out.println("</div></body>");
             out.println("</html>"); 
