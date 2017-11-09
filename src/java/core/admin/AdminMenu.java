@@ -38,13 +38,14 @@ public class AdminMenu extends HttpServlet
             "                </form> \n" +
             "           </div>");
             out.println("<body onload=\"datetime()\">");
-            out.println("<div class=\"page-wrapper\"><center>");
-            out.println("<br><h2><br>Администратор: Голосования</h2><br>");            
-            
+            out.println("<div class=\"page-wrapper\">");
+            out.println("<div align=\"right\"><form action=\"Back\" method=\"post\">"
+                    + "<input type=\"submit\" class=\"btn\" name=\"back\" value=\"Выйти\"/>"
+                    + "</form></div><center>");
+            out.println("<h2><br>Администратор: Голосования</h2><br>"); 
             out.println("<form action=\"AdminAddVote\" method=\"post\">\n" +
-                    "                <input type=\"submit\" class=\"btn\" name=\"view\" value=\"Добавить новое голосование\" />\n" +
+                    "                <input type=\"submit\" class=\"btn\" name=\"view\" value=\"Добавить новое голосование\"/>\n" +
                     "            </form><br>");
-            
             out.println("<table class=\"container\">");
             out.println("<thead>" +
             "                <td>Тема</td>" +
@@ -103,10 +104,10 @@ public class AdminMenu extends HttpServlet
             out.println("</head>");
             out.println("<body>");
             out.println("<h1><br><br><center>Ошибка сервлета</center></h1>");
+            System.out.println(e);
             out.println("</body>");
             out.println("</html>");
-            System.out.println(e);
-        }     
+        }    
     }
 
     @Override

@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +28,7 @@ public class Verification extends HttpServlet
         login = request.getParameter("login");
         password = request.getParameter("password");
         isadmin = request.getParameter("isadmin") != null;
-        
+
         try (PrintWriter out = response.getWriter()) 
         {
             try
@@ -51,21 +52,23 @@ public class Verification extends HttpServlet
                 }
                 else
                 {
-                    ResultSet rs = st.executeQuery("select user_login, user_password from user;");
+                    ResultSet rs = st.executeQuery("select user_login, user_password, user_id from user;");
             
                     // поиск пользователя
                     while(rs.next())
                     {
                         if(login.equals(rs.getString(1)) && password.equals(rs.getString(2)))
-                        {
+                        {                            
+                            request.setAttribute("userID", rs.getString(3));
+                            request.setAttribute("username", login);
+                            RequestDispatcher rd = request.getRequestDispatcher("UserMenu");
+                            rd.forward(request,response);
                             response.sendRedirect("UserMenu");
                         }
                     }
                 }
                 connection.close();
                 response.sendRedirect("Welcome.jsp");
-                               
-                
             }
             catch(Exception e)
             {
@@ -76,9 +79,9 @@ public class Verification extends HttpServlet
                 out.println("</head>");
                 out.println("<body>");
                 out.println("<h1><br><br><center>Ошибка сервлета</center></h1>");
+                System.out.println(e);
                 out.println("</body>");
                 out.println("</html>");
-                System.out.println(e);
             }
         }
     }

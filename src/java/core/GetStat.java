@@ -2,6 +2,9 @@ package core;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,21 +12,35 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "Registration", urlPatterns = {"/Registration"})
-public class Registration extends HttpServlet {
+@WebServlet(name = "GetStat", urlPatterns = {"/GetStat"})
+public class GetStat extends HttpServlet 
+{
+    public String voteID;
+    public String subject;
+    public String userID;
+    public String username;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");        
         PrintWriter out=response.getWriter();
+        ResultSet rs;
+        
+        java.sql.Connection connection;
+        Statement st;
+        
+        
+        String[] parts = request.getParameter("key").split(";");
+        voteID = parts[0];
+        subject = parts[1]; 
         
         try
         {
-            session = request.getSession();         
+            session=request.getSession();         
             
-            // отображение формы
-            out.println("<html> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"> <title>Продолжение регистрации - Choiser</title>");
+            // отображение таблицы
+            out.println("<html> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"> <title>Просмотр вариантов - Choiser</title>");
             out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">\n");
             out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/tablestyle.css\">\n");
             out.println("<script type=\"text/javascript\" src=\"js/script.js\"></script>");
@@ -35,19 +52,39 @@ public class Registration extends HttpServlet {
             "                </form> \n" +
             "           </div>");
             out.println("<body onload=\"datetime()\">");
-            out.println("<div class=\"page-wrapper\"><center>");
-            out.println("<br><h2><br>Форма регистрации</h2><br>");            
-            out.println(
-                "<form name=\"RegistrationResult\" action=\"RegistrationResult\" method=\"POST\">" +
-                    "<input placeholder=\"Email\" type=\"text\" name=\"email\" value\"\" />" +
-                    "<br><br>" +
-                    "<input placeholder=\"Логин\" type=\"text\" name=\"login\" value=\"\" />" +
-                    "<br><br>" +
-                    "<input placeholder=\"Пароль\" type=\"text\" name=\"password\" value=\"\" />" +
-                    "<br><br>" +
-                    "<input class=\"btn\" type=\"submit\" value=\"Зарегестрироваться\" name=\"login\" />" +
-                    "<br><br>" +
-                "</form>");
+            out.println("<div class=\"page-wrapper\">");
+            out.println("<div align=\"right\"><form action=\"Back\" method=\"post\">"
+                    + "<input type=\"submit\" class=\"btn\" name=\"back\" value=\"Выйти\"/>"
+                    + "</form></div><center>");                            
+            out.println("<br><h2><br>Администратор: Варианты голосования \"" + subject + "\"</h2><br>");
+            out.println("<form action=\"AdminAddVariant\" method=\"post\">\n" +
+                    "                <input type=\"submit\" class=\"btn\" name=\"view\" value=\"Добавить новый вариант\" />\n" +
+                    "                <input type=\"hidden\" name=\"vote\" value=\"" + voteID + "\" />\n" +
+                    "            </form><br>");
+            
+            
+            
+            try
+            {                
+                Class.forName("com.mysql.jdbc.Driver");
+                connection = DriverManager.getConnection("jdbc:mysql://localhost/choiserdb","root","root");
+                st = connection.createStatement();
+                rs = st.executeQuery("select variant_id, variant_title from variant where vote_id = " + voteID + ";");
+                
+                // вывод вариантов голосования
+                String id, variant;
+                while(rs.next())
+                {
+                    id = rs.getString(1);
+                    variant = rs.getString(2);
+                                        
+                }
+                connection.close();
+            }
+            catch(Exception exception) 
+            {
+               System.err.println(exception.getMessage());
+            }                        
             out.println("</div></body>");
             out.println("</html>"); 
         }
@@ -63,7 +100,7 @@ public class Registration extends HttpServlet {
             System.out.println(e);
             out.println("</body>");
             out.println("</html>");
-        }     
+        }    
     }
 
     @Override

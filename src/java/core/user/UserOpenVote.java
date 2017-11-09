@@ -12,26 +12,36 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "UserMenu", urlPatterns = {"/UserMenu"})
-public class UserMenu extends HttpServlet 
+@WebServlet(name = "UserOpenVote", urlPatterns = {"/UserOpenVote"})
+public class UserOpenVote extends HttpServlet 
 {
+    
+    public String voteID;
+    public String subject;
     public String userID;
     public String username;
-   
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");        
         PrintWriter out=response.getWriter();
+        ResultSet rs;
         
-        username = request.getParameter("login");
+        java.sql.Connection connection;
+        Statement st;
+        
+        
+        String[] parts = request.getParameter("key").split(";");
+        voteID = parts[0];
+        subject = parts[1]; 
         
         try
         {
             session=request.getSession();         
             
             // отображение таблицы
-            out.println("<html> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"> <title>Голосования - Choiser</title>");
+            out.println("<html> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"> <title>Просмотр вариантов - Choiser</title>");
             out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">\n");
             out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/tablestyle.css\">\n");
             out.println("<script type=\"text/javascript\" src=\"js/script.js\"></script>");
@@ -44,38 +54,57 @@ public class UserMenu extends HttpServlet
             "           </div>");
             out.println("<body onload=\"datetime()\">");
             out.println("<div class=\"page-wrapper\">");
-            out.println("<br><span align=\"right\"><form action=\"Back\" method=\"post\"><b>" + username + "  </b>"
-                    + "<input type=\"submit\" class=\"btn\" name=\"back\" value=\"Выйти\"/>  "
-                    + "</form></span><center>");
-            out.println("<h2><br>Голосования</h2><br>"); 
+            out.println("<div align=\"right\"><form action=\"Back\" method=\"post\">"
+                    + "<input type=\"submit\" class=\"btn\" name=\"back\" value=\"Выйти\"/>"
+                    + "</form></div><center>");                            
+            out.println("<br><h2><br>Администратор: Варианты голосования \"" + subject + "\"</h2><br>");
+            out.println("<form action=\"AdminAddVariant\" method=\"post\">\n" +
+                    "                <input type=\"submit\" class=\"btn\" name=\"view\" value=\"Добавить новый вариант\" />\n" +
+                    "                <input type=\"hidden\" name=\"vote\" value=\"" + voteID + "\" />\n" +
+                    "            </form><br>");
+            
             out.println("<table class=\"container\">");
             out.println("<thead>" +
-            "                <td>Тема</td>" +
-            "                <td>Варианты</td>" +
-            "                <td>Статистика</td>" +                   
+            "                <td>Вариант</td>" +
+            "                <td>Изменение</td>" +
+            "                <td>Удаление</td>" +                    
             "           </thead><tbody>");
             
             try
             {
+                try
+                {
+                    Class.forName("com.mysql.jdbc.Driver");
+                    connection = DriverManager.getConnection("jdbc:mysql://localhost/choiserdb","root","root");
+                    Statement s = connection.createStatement();
+                    ResultSet r = s.executeQuery("select user_id from user where user_login = '" + username + "';");
+                    r.next();
+                    userID = r.getString(1);
+                }
+                catch (Exception ex)
+                { 
+                    response.sendRedirect(ex.toString());
+                }
+                
                 Class.forName("com.mysql.jdbc.Driver");
-                java.sql.Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/choiserdb","root","root");
-                Statement st = connection.createStatement();
-                ResultSet rs = st.executeQuery("select * from vote;");
-
-                // вывод тем голосований
-                String id, vote;
+                connection = DriverManager.getConnection("jdbc:mysql://localhost/choiserdb","root","root");
+                st = connection.createStatement();
+                rs = st.executeQuery("select variant_id, variant_title from variant where vote_id = " + voteID + ";");
+                
+                // вывод вариантов голосования
+                String id, variant;
                 while(rs.next())
                 {
                     id = rs.getString(1);
-                    vote = rs.getString(2);
+                    variant = rs.getString(2);
                     out.println("<tr>");
-                    out.println("<td>" + vote + "</td>");                    
-                    out.println("<td><form action=\"UserOpenVote\" method=\"post\">\n" +
-                    "                <input type=\"submit\" class=\"btn\" name=\"open\" value=\"Открыть\" />\n" +
-                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + ";" + vote + ";" + userID + "\" />\n" +
+                    out.println("<td>" + variant + "</td>");                    
+                    out.println("<td><form action=\"AdminEditVariant\" method=\"post\">\n" +
+                    "                <input type=\"submit\" class=\"btn\" name=\"edit\" value=\"Редактировать\" />\n" +
+                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + ";" + variant + ";" + userID + "\" />\n" +
                     "            </form></td>");
-                    out.println("<td><form action=\"GetStat\" method=\"post\">\n" +
-                    "                <input type=\"submit\" class=\"btn\" name=\"stat\" value=\"Статистика\" />\n" +
+                    out.println("<td><form action=\"AdminDeleteVariant\" method=\"post\">\n" +
+                    "                <input type=\"submit\" class=\"btn\" name=\"delete\" value=\"Удалить\" />\n" +
                     "                <input type=\"hidden\" name=\"key\" value=\"" + id + "\" />\n" +
                     "            </form></td>");
                     out.println("</tr>");                    
@@ -85,10 +114,8 @@ public class UserMenu extends HttpServlet
             catch(Exception exception) 
             {
                System.err.println(exception.getMessage());
-            }
-            
-            out.println("<tbody></table");
-            
+            }            
+            out.println("<tbody></table");            
             out.println("</div></body>");
             out.println("</html>"); 
         }
@@ -100,11 +127,15 @@ public class UserMenu extends HttpServlet
             out.println("<title>Ошибка!</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1><br><br><center>Ошибка сервлета</center></h1>");            
+            out.println("<h1><br><br><center>Ошибка сервлета</center></h1>");
             System.out.println(e);
             out.println("</body>");
             out.println("</html>");
-        }      
+        }    
+        finally
+        {
+            response.sendRedirect("Welcome.jsp");
+        } 
     }
 
     @Override

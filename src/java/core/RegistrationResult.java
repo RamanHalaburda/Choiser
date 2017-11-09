@@ -102,9 +102,9 @@ public class RegistrationResult extends HttpServlet
             out.println("</head>");
             out.println("<body>");
             out.println("<h1><br><br><center>Ошибка сервлета</center></h1>");
+            System.out.println(e);
             out.println("</body>");
             out.println("</html>");
-            System.out.println(e);
         }     
     }
 

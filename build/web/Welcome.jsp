@@ -1,9 +1,3 @@
-<%-- 
-    Document   : Welcome
-    Created on : 01.11.2017, 21:22:54
-    Author     : Maria
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,6 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Авторизация - Choiser</title>        
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/tablestyle.css">
         <script type="text/javascript" src="js/script.js"></script>
     </head>
     <body onload="datetime()">
@@ -32,7 +27,7 @@
                     <br><br>
                     <input type="checkbox" value="admin" name="isadmin" /> Я администратор
                     <br><br>
-                    <input type="submit" value="Авторизоваться" name="do" />
+                    <input class="btn" type="submit" value="Авторизоваться" name="do" />
                     <br><br>
                     <span><a href="Registration">Регистрация</a></span>
                 </form>

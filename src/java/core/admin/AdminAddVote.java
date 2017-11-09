@@ -35,7 +35,10 @@ public class AdminAddVote extends HttpServlet {
             "                </form> \n" +
             "           </div>");
             out.println("<body onload=\"datetime()\">");
-            out.println("<div class=\"page-wrapper\"><center>");
+            out.println("<div class=\"page-wrapper\">");
+            out.println("<div align=\"right\"><form action=\"Back\" method=\"post\">"
+                    + "<input type=\"submit\" class=\"btn\" name=\"back\" value=\"Выйти\"/>"
+                    + "</form></div><center>");
             out.println("<br><br><h2>Администратор: Добавление голосования</h2><br>");    
             out.println("<form name=\"AdminAddedVote\" action=\"AdminAddedVote\" method=\"POST\">\n" +
             "                    <input placeholder=\"Тема голосования\" type=\"text\" name=\"subject\" value=\"\" width=600px/>\n" +
@@ -54,10 +57,10 @@ public class AdminAddVote extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1><br><br><center>Ошибка сервлета</center></h1>");
+            System.out.println(e);
             out.println("</body>");
             out.println("</html>");
-            System.out.println(e);
-        }     
+        }   
     }
 
     @Override
