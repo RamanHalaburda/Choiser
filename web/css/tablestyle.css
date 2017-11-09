@@ -1,5 +1,4 @@
 @charset "UTF-8";
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
 
 body {
     font-weight: 300;
@@ -86,13 +85,13 @@ body {
 
 .container td:hover {
   background-color: #888;
-  color: #403E10;
+  color: #FB667A;
   
-  box-shadow: #7F7C21 -1px 1px, #7F7C21 -2px 2px, #7F7C21 -3px 3px;
+  box-shadow: #FB667A -1px 1px, #FB667A -2px 2px, #FB667A -3px 3px;
   transform: translate3d(3px, -3px, 0);
   
   transition-delay: 0s;
-	  transition-duration: 0.4s;
+	  transition-duration: 0.3s;
 	  transition-property: all;
   transition-timing-function: line;
 }

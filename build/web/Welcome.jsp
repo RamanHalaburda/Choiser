@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Welcome - Choiser</title>        
+        <title>Авторизация - Choiser</title>        
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <script type="text/javascript" src="js/script.js"></script>
     </head>
@@ -20,9 +20,9 @@
                     <p><input id="inputtime" name="time" type="text" name="time" value="" size="14" disabled="true"></p>
                 </form> 
         </div>
-        <div class="page-wrapper">
+        <div class="page-wrapper">            
             <center>
-                <h1>Привествуем в Choiser!</h1>
+                <br><h1>Привествуем в Choiser!</h1><br>
                 <h1>Сервис для множественного голосования.</h1><br><br><br>
                 <h2>Авторизация</h2><br><br>
                 <form name="Verification" action="Verification" method="POST">

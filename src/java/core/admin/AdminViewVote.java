@@ -56,6 +56,7 @@ public class AdminViewVote extends HttpServlet
             
             out.println("<form action=\"AdminAddVariant\" method=\"post\">\n" +
                     "                <input type=\"submit\" class=\"btn\" name=\"view\" value=\"Добавить новый вариант\" />\n" +
+                    "                <input type=\"hidden\" name=\"vote\" value=\"" + voteID + "\" />\n" +
                     "            </form><br>");
             
             out.println("<table class=\"container\">");

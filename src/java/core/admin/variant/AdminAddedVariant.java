@@ -20,7 +20,7 @@ public class AdminAddedVariant extends HttpServlet
     {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        variant = request.getParameter("subject"); // берем текст варианта        
+        variant = request.getParameter("variant"); // берем текст варианта        
         voteID = request.getParameter("vote"); // берем идентификатор голосования
         
         try

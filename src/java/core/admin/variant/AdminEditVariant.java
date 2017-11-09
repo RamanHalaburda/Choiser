@@ -43,7 +43,7 @@ public class AdminEditVariant extends HttpServlet
             "           </div>");
             out.println("<body onload=\"datetime()\">");
             out.println("<div class=\"page-wrapper\"><center>");
-            out.println("<br><br><h2>Администратор: Изменение варианта \"" + variant + "\"</h2><br>"); 
+            out.println("<br><br><h2>Администратор: Изменение варианта\"" + variant + "\"</h2><br>"); 
             out.println("<form name=\"AdminEditedVariant\" action=\"AdminEditedVariant\" method=\"POST\">\n" +
             "                    <input placeholder=\"Вариант ответа\" type=\"text\" name=\"variant\" value=\"\" width=600px/>\n" +
             "                    <input type=\"hidden\" name=\"key\" value=\"" + variantID + "\" />\n" +

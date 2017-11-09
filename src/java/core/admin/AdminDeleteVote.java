@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 public class AdminDeleteVote extends HttpServlet 
 {    
     public String voteID;
-    public String subject;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
@@ -24,7 +23,6 @@ public class AdminDeleteVote extends HttpServlet
         
         String[] parts = request.getParameter("key").split(";");
         voteID = parts[0];
-        subject = parts[1];  
         
         try
         {

@@ -10,13 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "AdminAddVariant", urlPatterns = {"/AdminAddVariant"})
-public class AdminAddVariant extends HttpServlet {
+public class AdminAddVariant extends HttpServlet 
+{
+    String vote;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");        
-        PrintWriter out=response.getWriter();  
+        PrintWriter out=response.getWriter();          
+        
+        vote = request.getParameter("vote");// берем id варианта
         
         try
         {
@@ -36,9 +40,10 @@ public class AdminAddVariant extends HttpServlet {
             "           </div>");
             out.println("<body onload=\"datetime()\">");
             out.println("<div class=\"page-wrapper\"><center>");
-            out.println("<br><br><h2>Администратор: Добавление варианта</h2><br>");   
+            out.println("<br><br><h2>Администратор: Добавление варианта</h2><br>");out.println(request.getParameter("key") + "<br>");   
             out.println("<form name=\"AdminAddedVote\" action=\"AdminAddedVariant\" method=\"POST\">\n" +
-            "                    <input placeholder=\"Вариант ответа\" type=\"text\" name=\"variant\" value=\"\" width=600px/>\n" +
+            "                    <input placeholder=\"Вариант ответа\" type=\"text\" name=\"variant\" value=\"\" width=90%/>\n" +
+            "                    <input type=\"hidden\" name=\"vote\" value=\"" + vote + "\" />\n" +
             "                    <br><br>\n" +
             "                    <input class=\"btn\" type=\"submit\" value=\"Добавить\" name=\"do\" />\n" +
             "                </form>");                         

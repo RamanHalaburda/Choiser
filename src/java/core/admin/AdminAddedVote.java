@@ -1,7 +1,6 @@
 package core.admin;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import javax.servlet.ServletException;

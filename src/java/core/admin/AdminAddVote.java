@@ -40,7 +40,7 @@ public class AdminAddVote extends HttpServlet {
             out.println("<form name=\"AdminAddedVote\" action=\"AdminAddedVote\" method=\"POST\">\n" +
             "                    <input placeholder=\"Тема голосования\" type=\"text\" name=\"subject\" value=\"\" width=600px/>\n" +
             "                    <br><br>\n" +
-            "                    <input type=\"submit\" value=\"Добавить\" name=\"do\" />\n" +
+            "                    <input class=\"btn\" type=\"submit\" value=\"Добавить\" name=\"do\" />\n" +
             "                </form>");
             out.println("</div></body>");
             out.println("</html>"); 
