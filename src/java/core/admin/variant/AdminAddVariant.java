@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package core.admin.variant;
 
 import java.io.IOException;
@@ -12,77 +7,76 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Roman
- */
 @WebServlet(name = "AdminAddVariant", urlPatterns = {"/AdminAddVariant"})
 public class AdminAddVariant extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+    {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+        request.setCharacterEncoding("UTF-8");        
+        PrintWriter out=response.getWriter();  
+        
+        try
+        {
+            session=request.getSession();         
+            
+            // отображение таблицы
+            out.println("<html> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"> <title>Новый вариант - Choiser</title>");
+            out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">\n");
+            out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/tablestyle.css\">\n");
+            out.println("<script type=\"text/javascript\" src=\"js/script.js\"></script>");
+            out.println("</head>");
+            out.println("<div class=\"clock\"> \n" +
+            "                <form name=\"form_clock\">\n" +
+            "                    <p><input id=\"inputdate\" name=\"date\" type=\"text\" name=\"date\" value=\"\" size=\"12\" disabled=\"true\"></p>\n" +
+            "                    <p><input id=\"inputtime\" name=\"time\" type=\"text\" name=\"time\" value=\"\" size=\"12\" disabled=\"true\"></p>\n" +
+            "                </form> \n" +
+            "           </div>");
+            out.println("<body onload=\"datetime()\">");
+            out.println("<div class=\"page-wrapper\"><center>");
+            out.println("<br><br><h2>Администратор: Добавление варианта</h2><br>");   
+            out.println("<form name=\"AdminAddedVote\" action=\"AdminAddedVariant\" method=\"POST\">\n" +
+            "                    <input placeholder=\"Вариант ответа\" type=\"text\" name=\"variant\" value=\"\" width=600px/>\n" +
+            "                    <br><br>\n" +
+            "                    <input class=\"btn\" type=\"submit\" value=\"Добавить\" name=\"do\" />\n" +
+            "                </form>");                         
+            out.println("</div></body>");
+            out.println("</html>"); 
+        }
+        catch(Exception e)
+        {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminAddVariant</title>");            
+            out.println("<title>Ошибка!</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AdminAddVariant at " + request.getContextPath() + "</h1>");
+            out.println("<h1><br><br><center>Ошибка сервлета</center></h1>");
             out.println("</body>");
             out.println("</html>");
-        }
+            System.out.println(e);
+        }     
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
+
+    HttpSession session;
 
 }

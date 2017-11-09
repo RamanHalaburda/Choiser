@@ -2,9 +2,6 @@ package core.admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,18 +36,12 @@ public class AdminAddVote extends HttpServlet {
             "           </div>");
             out.println("<body onload=\"datetime()\">");
             out.println("<div class=\"page-wrapper\"><center>");
-            
-                
-            out.println("<br><br><h2>Администратор: Добавление голосования</h2><br>");            
-            
-                               
+            out.println("<br><br><h2>Администратор: Добавление голосования</h2><br>");    
             out.println("<form name=\"AdminAddedVote\" action=\"AdminAddedVote\" method=\"POST\">\n" +
             "                    <input placeholder=\"Тема голосования\" type=\"text\" name=\"subject\" value=\"\" width=600px/>\n" +
             "                    <br><br>\n" +
             "                    <input type=\"submit\" value=\"Добавить\" name=\"do\" />\n" +
-            "                </form>"); 
-            
-            
+            "                </form>");
             out.println("</div></body>");
             out.println("</html>"); 
         }

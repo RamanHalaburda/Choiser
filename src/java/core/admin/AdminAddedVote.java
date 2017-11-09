@@ -19,9 +19,8 @@ public class AdminAddedVote extends HttpServlet
     {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        subject = request.getParameter("subject"); // берем Email
+        subject = request.getParameter("subject"); // берем тему голосования
         
-        response.setContentType("text/html;charset=UTF-8");
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
