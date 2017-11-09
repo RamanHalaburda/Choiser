@@ -31,11 +31,14 @@ public class AdminAddedVote extends HttpServlet
             st.executeUpdate(sql);
             st.execute("commit");
             connection.close();
-            response.sendRedirect("AdminMenu");
         }
         catch(Exception exception) 
         {
             System.err.println(exception.getMessage());
+        }
+        finally
+        {
+            response.sendRedirect("AdminMenu");            
         }
     }
 

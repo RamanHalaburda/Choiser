@@ -16,15 +16,22 @@ import javax.servlet.http.HttpSession;
 public class AdminViewVote extends HttpServlet 
 {
     public String voteID;
-    public String voteTitle;
+    public String subject;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");        
-        PrintWriter out=response.getWriter();        
+        PrintWriter out=response.getWriter();
+        ResultSet rs;
         
-        voteID = request.getParameter("key"); // берем id голосования        
+        java.sql.Connection connection;
+        Statement st;
+        
+        
+        String[] parts = request.getParameter("key").split(";");
+        voteID = parts[0];
+        subject = parts[1]; 
         
         try
         {
@@ -44,18 +51,8 @@ public class AdminViewVote extends HttpServlet
             "           </div>");
             out.println("<body onload=\"datetime()\">");
             out.println("<div class=\"page-wrapper\"><center>");
-            
-            try
-            {
-                java.sql.Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/choiserdb","root","root");
-                Statement st = connection.createStatement();
-                ResultSet rs = st.executeQuery("select variant_title from variant where vote_id = " + voteID + ";");
-                voteTitle = rs.getString(1);
-            }
-            catch(Exception exception) { 
-                System.err.println(exception.getMessage()); }
-                
-            out.println("<br><h2><br>Администратор: Варианты голосования \"" + voteTitle + "\"</h2><br>");            
+                            
+            out.println("<br><h2><br>Администратор: Варианты голосования \"" + subject + "\"</h2><br>");            
             
             out.println("<table class=\"container\">");
             out.println("<thead>" +
@@ -67,9 +64,9 @@ public class AdminViewVote extends HttpServlet
             try
             {
                 Class.forName("com.mysql.jdbc.Driver");
-                java.sql.Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/choiserdb","root","root");
-                Statement st = connection.createStatement();
-                ResultSet rs = st.executeQuery("select variant_id, variant_title from variant where vote_id = " + voteID + ";");
+                connection = DriverManager.getConnection("jdbc:mysql://localhost/choiserdb","root","root");
+                st = connection.createStatement();
+                rs = st.executeQuery("select variant_id, variant_title from variant where vote_id = " + voteID + ";");
 
                 // вывод вариантов голосования
                 String id, variant;
@@ -81,7 +78,7 @@ public class AdminViewVote extends HttpServlet
                     out.println("<td>" + variant + "</td>");                    
                     out.println("<td><form action=\"AdminEditVariant\" method=\"post\">\n" +
                     "                <input type=\"submit\" class=\"btn\" name=\"edit\" value=\"Редактировать\" />\n" +
-                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + "\" />\n" +
+                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + ";" + variant + "\" />\n" +
                     "            </form></td>");
                     out.println("<td><form action=\"AdminDeleteVariant\" method=\"post\">\n" +
                     "                <input type=\"submit\" class=\"btn\" name=\"delete\" value=\"Удалить\" />\n" +

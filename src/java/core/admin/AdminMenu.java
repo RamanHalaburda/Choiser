@@ -70,15 +70,15 @@ public class AdminMenu extends HttpServlet
                     out.println("<td>" + vote + "</td>");                    
                     out.println("<td><form action=\"AdminViewVote\" method=\"post\">\n" +
                     "                <input type=\"submit\" class=\"btn\" name=\"view\" value=\"Просмотреть\" />\n" +
-                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + "\" />\n" +
+                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + ";" + vote + "\" />\n" +
                     "            </form></td>");
                     out.println("<td><form action=\"AdminEditVote\" method=\"post\">\n" +
                     "                <input type=\"submit\" class=\"btn\" name=\"edit\" value=\"Редактировать\" />\n" +
-                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + "\" />\n" +
+                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + ";" + vote + "\" />\n" +
                     "            </form></td>");
                     out.println("<td><form action=\"AdminDeleteVote\" method=\"post\">\n" +
                     "                <input type=\"submit\" class=\"btn\" name=\"delete\" value=\"Удалить\" />\n" +
-                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + "\" />\n" +
+                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + ";" + vote + "\" />\n" +
                     "            </form></td>");
                     out.println("</tr>");                    
                 }
