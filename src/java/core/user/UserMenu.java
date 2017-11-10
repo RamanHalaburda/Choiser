@@ -24,7 +24,8 @@ public class UserMenu extends HttpServlet
         request.setCharacterEncoding("UTF-8");        
         PrintWriter out=response.getWriter();
         
-        username = request.getParameter("login");
+        userID = (String)request.getAttribute("userID");
+        username = (String)request.getAttribute("userName");
         
         try
         {
@@ -72,7 +73,7 @@ public class UserMenu extends HttpServlet
                     out.println("<td>" + vote + "</td>");                    
                     out.println("<td><form action=\"UserOpenVote\" method=\"post\">\n" +
                     "                <input type=\"submit\" class=\"btn\" name=\"open\" value=\"Открыть\" />\n" +
-                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + ";" + vote + ";" + userID + "\" />\n" +
+                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + ";" + vote + ";" + userID + ";" + username + "\" />\n" +
                     "            </form></td>");
                     out.println("<td><form action=\"GetStat\" method=\"post\">\n" +
                     "                <input type=\"submit\" class=\"btn\" name=\"stat\" value=\"Статистика\" />\n" +

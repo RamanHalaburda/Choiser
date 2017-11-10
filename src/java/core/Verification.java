@@ -58,9 +58,9 @@ public class Verification extends HttpServlet
                     while(rs.next())
                     {
                         if(login.equals(rs.getString(1)) && password.equals(rs.getString(2)))
-                        {                            
+                        {             
                             request.setAttribute("userID", rs.getString(3));
-                            request.setAttribute("username", login);
+                            request.setAttribute("userName", login);
                             RequestDispatcher rd = request.getRequestDispatcher("UserMenu");
                             rd.forward(request,response);
                             response.sendRedirect("UserMenu");

@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,8 +29,10 @@ public class GetStat extends HttpServlet
         ResultSet rs;
         
         java.sql.Connection connection;
-        Statement st;
+        Statement st;        
         
+        userID = (String)request.getAttribute("userID");
+        username = (String)request.getAttribute("userName");
         
         String[] parts = request.getParameter("key").split(";");
         voteID = parts[0];
@@ -87,6 +90,12 @@ public class GetStat extends HttpServlet
             }                        
             out.println("</div></body>");
             out.println("</html>"); 
+            
+            request.setAttribute("userID", userID);
+            request.setAttribute("userName", username);
+            RequestDispatcher rd = request.getRequestDispatcher("UserMenu");
+            rd.forward(request,response);
+            response.sendRedirect("UserMenu");
         }
         catch(Exception e)
         {

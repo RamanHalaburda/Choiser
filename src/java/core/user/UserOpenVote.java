@@ -17,9 +17,9 @@ public class UserOpenVote extends HttpServlet
 {
     
     public String voteID;
-    public String subject;
+    public String voteSubject;
     public String userID;
-    public String username;
+    public String userName;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
@@ -29,12 +29,14 @@ public class UserOpenVote extends HttpServlet
         ResultSet rs;
         
         java.sql.Connection connection;
-        Statement st;
-        
+        Statement st;        
         
         String[] parts = request.getParameter("key").split(";");
         voteID = parts[0];
-        subject = parts[1]; 
+        voteSubject = parts[1];
+        userID = parts[2];
+        userName = parts[3];
+        //System.out.println(voteID + "*" + voteSubject + "*" + userID + "*" + userName + "*");
         
         try
         {
@@ -54,38 +56,19 @@ public class UserOpenVote extends HttpServlet
             "           </div>");
             out.println("<body onload=\"datetime()\">");
             out.println("<div class=\"page-wrapper\">");
-            out.println("<div align=\"right\"><form action=\"Back\" method=\"post\">"
-                    + "<input type=\"submit\" class=\"btn\" name=\"back\" value=\"Выйти\"/>"
-                    + "</form></div><center>");                            
-            out.println("<br><h2><br>Администратор: Варианты голосования \"" + subject + "\"</h2><br>");
-            out.println("<form action=\"AdminAddVariant\" method=\"post\">\n" +
-                    "                <input type=\"submit\" class=\"btn\" name=\"view\" value=\"Добавить новый вариант\" />\n" +
-                    "                <input type=\"hidden\" name=\"vote\" value=\"" + voteID + "\" />\n" +
-                    "            </form><br>");
-            
+            out.println("<br><span align=\"right\"><form action=\"Back\" method=\"post\"><b>" + userName + "  </b>"
+                    + "<input type=\"submit\" class=\"btn\" name=\"back\" value=\"Выйти\"/>  "
+                    + "</form></span><center>");                            
+            out.println("<h2><br>Варианты голосования \"" + voteSubject + "\"</h2><br>");
+                        
             out.println("<table class=\"container\">");
             out.println("<thead>" +
             "                <td>Вариант</td>" +
-            "                <td>Изменение</td>" +
-            "                <td>Удаление</td>" +                    
+            "                <td>Изменение</td>" +                   
             "           </thead><tbody>");
             
             try
-            {
-                try
-                {
-                    Class.forName("com.mysql.jdbc.Driver");
-                    connection = DriverManager.getConnection("jdbc:mysql://localhost/choiserdb","root","root");
-                    Statement s = connection.createStatement();
-                    ResultSet r = s.executeQuery("select user_id from user where user_login = '" + username + "';");
-                    r.next();
-                    userID = r.getString(1);
-                }
-                catch (Exception ex)
-                { 
-                    response.sendRedirect(ex.toString());
-                }
-                
+            {                
                 Class.forName("com.mysql.jdbc.Driver");
                 connection = DriverManager.getConnection("jdbc:mysql://localhost/choiserdb","root","root");
                 st = connection.createStatement();
@@ -99,13 +82,9 @@ public class UserOpenVote extends HttpServlet
                     variant = rs.getString(2);
                     out.println("<tr>");
                     out.println("<td>" + variant + "</td>");                    
-                    out.println("<td><form action=\"AdminEditVariant\" method=\"post\">\n" +
-                    "                <input type=\"submit\" class=\"btn\" name=\"edit\" value=\"Редактировать\" />\n" +
-                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + ";" + variant + ";" + userID + "\" />\n" +
-                    "            </form></td>");
-                    out.println("<td><form action=\"AdminDeleteVariant\" method=\"post\">\n" +
-                    "                <input type=\"submit\" class=\"btn\" name=\"delete\" value=\"Удалить\" />\n" +
-                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + "\" />\n" +
+                    out.println("<td><form action=\"UserChoice\" method=\"post\">\n" +
+                    "                <input type=\"submit\" class=\"btn\" name=\"choice\" value=\"Проголосовать\" />\n" +
+                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + ";" + voteID + ";" + userID + ";" + userName + "\"/>\n" +
                     "            </form></td>");
                     out.println("</tr>");                    
                 }
@@ -131,11 +110,7 @@ public class UserOpenVote extends HttpServlet
             System.out.println(e);
             out.println("</body>");
             out.println("</html>");
-        }    
-        finally
-        {
-            response.sendRedirect("Welcome.jsp");
-        } 
+        }   
     }
 
     @Override
