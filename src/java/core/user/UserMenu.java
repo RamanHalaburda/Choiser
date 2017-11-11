@@ -71,13 +71,25 @@ public class UserMenu extends HttpServlet
                     vote = rs.getString(2);
                     out.println("<tr>");
                     out.println("<td>" + vote + "</td>");                    
-                    out.println("<td><form action=\"UserOpenVote\" method=\"post\">\n" +
-                    "                <input type=\"submit\" class=\"btn\" name=\"open\" value=\"Открыть\" />\n" +
-                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + ";" + vote + ";" + userID + ";" + username + "\" />\n" +
-                    "            </form></td>");
+                    out.println("<td>");
+                    
+                    Class.forName("com.mysql.jdbc.Driver");
+                    java.sql.Connection c = DriverManager.getConnection("jdbc:mysql://localhost/choiserdb","root","root");
+                    Statement s = c.createStatement();
+                    ResultSet r = s.executeQuery("select * from choice where choice_vote_id = " + id + " and choice_user_id = " + userID + ";");
+
+                    if(!r.last())
+                    {
+                        out.println("<form action=\"UserOpenVote\" method=\"post\">\n" +
+                        "<input type=\"submit\" class=\"btn\" name=\"open\" value=\"Открыть\" />\n" +
+                        "<input type=\"hidden\" name=\"key\" value=\"" + id + ";" + vote + ";" + userID + ";" + username + "\" />\n" +
+                        "</form>");
+                    }                     
+                    
+                    out.println("</td>");
                     out.println("<td><form action=\"GetStat\" method=\"post\">\n" +
                     "                <input type=\"submit\" class=\"btn\" name=\"stat\" value=\"Статистика\" />\n" +
-                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + "\" />\n" +
+                    "                <input type=\"hidden\" name=\"key\" value=\"" + id + ";" + vote + ";" + userID + ";" + username + "\" />\n" +
                     "            </form></td>");
                     out.println("</tr>");                    
                 }
