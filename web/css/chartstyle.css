@@ -1,10 +1,10 @@
 .chart div {
-  font: 10px sans-serif;
-  background-color: steelblue;
+  font: 14px sans-serif bold;
   text-align: right;
   padding: 3px;
   margin: 1px;
   color: white;
+  background-color: #FB667A;
 }
 
 
