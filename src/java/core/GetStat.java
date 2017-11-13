@@ -72,7 +72,6 @@ public class GetStat extends HttpServlet
                 allChoices = rs.getString(1);
             }
             else { response.sendRedirect("UserMenu"); }
-            //out.println(allChoices + "<br>");
                         
             // ищем вариант с максимальным количеством голосов
             int max = 0;
@@ -147,29 +146,7 @@ public class GetStat extends HttpServlet
                 "</tr>\n" +
                 "</tbody>\n" +
                 "</table>\n");    
-            */
-            /*
-            try
-            {                
-                Class.forName("com.mysql.jdbc.Driver");
-                connection = DriverManager.getConnection("jdbc:mysql://localhost/choiserdb","root","root");
-                st = connection.createStatement();
-                rs = st.executeQuery("select variant_id, variant_title from variant where vote_id = " + voteID + ";");
-                
-                // вывод вариантов голосования
-                String id, variant;
-                while(rs.next())
-                {
-                    id = rs.getString(1);
-                    variant = rs.getString(2);                                        
-                }
-                connection.close();
-            }
-            catch(Exception exception) 
-            {
-               System.err.println(exception.getMessage());
-            }
-            */
+            */            
             out.println("</div></body>");
             out.println("</html>"); 
             
